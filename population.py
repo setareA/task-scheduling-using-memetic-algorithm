@@ -44,7 +44,8 @@ class Population:
         for i in range(self.size_of_pop):
             parent_a = self.select_parent()
             parent_b = self.select_parent()
-
+            with open('reproduction.txt', 'a') as out:
+                out.write("num_generation :  "+str(self.generations)+ " parentA :  "+str(parent_a.get_genes())+ " parentB : "+str(parent_b.get_genes())+"#################" + '\n\n')
             index = self.find_worst_dna_index()
             self.population[index] = copy.deepcopy(self.cross_over_and_mutate(parent_a,parent_b))
         self.generations += 1
@@ -74,9 +75,14 @@ class Population:
                 new_dna.append_genes(a.return_genes(i))
             else:
                 new_dna.append_genes(b.return_genes(i))
+        with open('reproduction.txt', 'a') as out:
+            out.write("after cross over dna:  " + str(new_dna.get_genes()) + "#################" + '\n\n')
         self.mutate_dna(new_dna)
-        new_dna.calc_fitness()
-
+        with open('reproduction.txt', 'a') as out:
+            out.write("after mutation dna:  " + str(new_dna.get_genes()) + "#################" + '\n\n')
+        new_dna.calc_fitness_and_hill_climbing()
+        with open('reproduction.txt', 'a') as out:
+            out.write("after hillclimbing dna:  " + str(new_dna.get_genes()) + "#################" + '\n\n')
         return new_dna
 
     def mutate_dna(self,new_dna):
@@ -101,4 +107,9 @@ class Population:
                 maximum = self.population[i].get_final_fitness()
                 max_index = i
         return self.population[max_index]
+
+    def print_all_fitness(self):
+        for i in range(self.size_of_pop):
+            with open('fitness_aval_while.txt', 'a') as out:
+                out.write("fitness dna :  " + str(self.population[i].get_final_fitness()) + '\n')
 

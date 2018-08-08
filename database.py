@@ -44,8 +44,8 @@ class ComputingCenters:
         count = 1
         for i in range(1, num_cc):
             num_nodes = random.randint(1, 5)
-            ram = random.randint(256, 1024)
-            cpu = random.randint(100, 500)
+            ram = random.randint(128, 512)
+            cpu = random.randint(100, 300)
 
             self.conn.execute("INSERT INTO COMPUTING_CENTERS (ID,NUM_OF_NODES,RAM,CPU) \
                 VALUES ("+str(i) + ","+str(num_nodes) + "," + str(ram*num_nodes) + "," + str(cpu*num_nodes)+" )");
@@ -68,7 +68,6 @@ class ComputingCenters:
         self.conn.commit()
         print("insert data successfully")
         self.conn.close()
-
 
 
 

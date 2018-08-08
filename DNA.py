@@ -20,8 +20,9 @@ class DNA:
         if mode == 1:
             for i in range(self.num):
                 self.genes.append(database.select_random_node())   # select one of the nodes
-
-            self.calc_fitness()
+            with open('first_random_genes.txt', 'a') as out:
+                out.write(str(self.genes) + '\n\n' + "#################" + '\n\n')
+            self.calc_fitness_and_hill_climbing()
 
     def get_final_fitness(self):
         return self.final_fitness
@@ -61,7 +62,7 @@ class DNA:
             print(self.genes[cnt])
             cnt += 1
 
-    def calc_fitness(self):
+    def calc_fitness_and_hill_climbing(self):
 
         self.fitness = 0
         fit = 0
@@ -83,6 +84,8 @@ class DNA:
                     # for r in ccc.execute("SELECT * FROM NODES WHERE ID = " + str(self.genes[i])):
                     #     print(r)
         #print(fit)
+        # with open('calc_fitness_in_hill.txt', 'a') as out:
+        #     out.write(str(self.fitness)+" pow((self.fitness/self.num), 4) :  "+str(pow((self.fitness/self.num), 4))+ '\n\n' + "#################" + '\n\n')
         self.local_hillclimbing(ccc)
         ccc.close()
 

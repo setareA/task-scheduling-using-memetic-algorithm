@@ -36,7 +36,9 @@ class ProcessingProgram:
 def create_list(num_of_elements):
 
     l = []
+    q = queue.Queue()
     for i in range(0, num_of_elements):
-        program = ProcessingProgram(random.randint(1, 256), random.randint(1, 150), random.choice([1, 2]))
+        program = ProcessingProgram(random.randint(1, 512), random.randint(1, 200), random.choice([1, 2]))
         l.append(program)
-    return l
+        q.put(program)
+    return l,q
